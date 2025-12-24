@@ -44,8 +44,8 @@
 1. GitHub-аас репозиторыг clone хийнэ:
 
 ```bash
-git clone https://github.com/yourusername/ub-shortest-path.git
-cd ub-shortest-path
+git clone https://github.com/enkush-3/mongolia_road_network.git
+cd mongolia_road_network
 ```
 2. Maven ашиглан project-г build хийнэ:
 
