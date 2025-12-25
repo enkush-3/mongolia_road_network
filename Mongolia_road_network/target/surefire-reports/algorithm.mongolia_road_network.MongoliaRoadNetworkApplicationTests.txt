@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: algorithm.mongolia_road_network.MongoliaRoadNetworkApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.854 s - in algorithm.mongolia_road_network.MongoliaRoadNetworkApplicationTests

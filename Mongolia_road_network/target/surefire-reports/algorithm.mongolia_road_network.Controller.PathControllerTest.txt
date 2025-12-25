@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: algorithm.mongolia_road_network.Controller.PathControllerTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.114 s - in algorithm.mongolia_road_network.Controller.PathControllerTest
