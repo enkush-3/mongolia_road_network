@@ -1,11 +1,12 @@
-package algorithm.biydaalt_1.service;
+package algorithm.mongolia_road_network.service;
 
-import algorithm.biydaalt_1.model.Edge;
-import algorithm.biydaalt_1.model.Node;
-import algorithm.biydaalt_1.service.Algorithm.Algorithm;
-import algorithm.biydaalt_1.service.Algorithm.BreadthFirstSearchAlgorithm;
-import algorithm.biydaalt_1.service.Algorithm.DepthFirstSearchAlgorithm;
-import algorithm.biydaalt_1.service.Algorithm.DijkstraAlgorithm;
+import algorithm.mongolia_road_network.model.Edge;
+import algorithm.mongolia_road_network.model.Node;
+import algorithm.mongolia_road_network.model.Response;
+import algorithm.mongolia_road_network.service.Algorithm.AStarAlgorithm;
+import algorithm.mongolia_road_network.service.Algorithm.Algorithm;
+import algorithm.mongolia_road_network.service.Algorithm.BreadthFirstSearchAlgorithm;
+import algorithm.mongolia_road_network.service.Algorithm.DijkstraAlgorithm;
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
@@ -42,7 +43,7 @@ public class GraphService {
     public void init() throws Exception {
 
         algorithms.put("dijkstra", new DijkstraAlgorithm());
-        algorithms.put("dfs", new DepthFirstSearchAlgorithm());
+        algorithms.put("astar", new AStarAlgorithm(idToNode));
         algorithms.put("bfs", new BreadthFirstSearchAlgorithm());
 
         File shapefile = new File(getClass().getClassLoader().getResource("data/gis_osm_roads_free_1.shp").getFile());
@@ -182,7 +183,7 @@ public class GraphService {
         return nearestNodeId;
     }
 
-    public List<Integer> findPath(int startId, int endId, String algorithmName) {
+    public Response findPath(int startId, int endId, String algorithmName) {
         Algorithm algorithm = algorithms.get(algorithmName.toLowerCase());
         if (algorithm == null) {
             throw new IllegalArgumentException("Unknown algorithm: " + algorithmName);

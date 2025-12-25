@@ -1,6 +1,6 @@
-package algorithm.biydaalt_1.service.Algorithm;
+package algorithm.mongolia_road_network.service.Algorithm;
 
-import algorithm.biydaalt_1.model.Edge;
+import algorithm.mongolia_road_network.model.Edge;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;

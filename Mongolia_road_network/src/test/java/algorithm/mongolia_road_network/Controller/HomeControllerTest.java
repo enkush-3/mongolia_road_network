@@ -1,6 +1,6 @@
-package algorithm.biydaalt_1.Controller;
+package algorithm.mongolia_road_network.Controller;
 
-import algorithm.biydaalt_1.controller.HomeController;
+import algorithm.mongolia_road_network.controller.HomeController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

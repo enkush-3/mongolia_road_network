@@ -1,4 +1,4 @@
-package algorithm.biydaalt_1.controller;
+package algorithm.mongolia_road_network.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

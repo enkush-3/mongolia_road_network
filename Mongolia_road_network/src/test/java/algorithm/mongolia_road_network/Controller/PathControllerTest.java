@@ -1,9 +1,10 @@
-package algorithm.biydaalt_1.Controller;
+package algorithm.mongolia_road_network.Controller;
 
-import algorithm.biydaalt_1.controller.PathController;
-import algorithm.biydaalt_1.model.Node;
-import algorithm.biydaalt_1.model.PathResponse;
-import algorithm.biydaalt_1.service.GraphService;
+import algorithm.mongolia_road_network.controller.PathController;
+import algorithm.mongolia_road_network.model.Node;
+import algorithm.mongolia_road_network.model.PathResponse;
+import algorithm.mongolia_road_network.model.Response;
+import algorithm.mongolia_road_network.service.GraphService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ class PathControllerTest {
 
         when(graphService.findNearestNode(startLat, startLon)).thenReturn(startId);
         when(graphService.findNearestNode(endLat, endLon)).thenReturn(endId);
-        when(graphService.findPath(startId, endId, "dijkstra")).thenReturn(pathNodeIds);
+        when(graphService.findPath(startId, endId, "dijkstra")).thenReturn(new Response(pathNodeIds, 10.0));
         when(graphService.getNodeById(startId)).thenReturn(new Node(startId, 40.0, -74.0));
         when(graphService.getNodeById(3)).thenReturn(new Node(3, 40.5, -74.5));
         when(graphService.getNodeById(endId)).thenReturn(new Node(endId, 41.0, -75.0));
@@ -129,12 +130,12 @@ class PathControllerTest {
 
         when(graphService.findNearestNode(startLat, startLon)).thenReturn(startId);
         when(graphService.findNearestNode(endLat, endLon)).thenReturn(endId);
-        when(graphService.findPath(startId, endId, "dijkstra")).thenReturn(Collections.emptyList());
+        when(graphService.findPath(startId, endId, "dijkstra")).thenReturn(new Response(Collections.emptyList(), 0.0));
 
         mockMvc.perform(get("/path")
                         .param("start_lat", String.valueOf(startLat))
                         .param("start_lon", String.valueOf(startLon))
-                        .param("end_lat", String.valueOf(endLon))
+                        .param("end_lat", String.valueOf(endLat))
                         .param("end_lon", String.valueOf(endLon))
                         .param("algo", "dijkstra")
                         .accept(MediaType.APPLICATION_JSON))
@@ -181,7 +182,7 @@ class PathControllerTest {
 
         when(graphService.findNearestNode(startLat, startLon)).thenReturn(startId);
         when(graphService.findNearestNode(endLat, endLon)).thenReturn(endId);
-        when(graphService.findPath(startId, endId, "dijkstra")).thenReturn(pathNodeIds);
+        when(graphService.findPath(startId, endId, "dijkstra")).thenReturn(new Response(pathNodeIds, 2.0));
         when(graphService.getNodeById(startId)).thenReturn(new Node(startId, 40.0, -74.0));
         when(graphService.getNodeById(endId)).thenReturn(new Node(endId, 41.0, -75.0));
 

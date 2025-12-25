@@ -1,10 +1,10 @@
-package algorithm.biydaalt_1;
+package algorithm.mongolia_road_network;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BiyDaalt1ApplicationTests {
+class MongoliaRoadNetworkApplicationTests {
 
     @Test
     void contextLoads() {

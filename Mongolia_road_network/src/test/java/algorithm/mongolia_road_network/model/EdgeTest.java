@@ -1,4 +1,4 @@
-package algorithm.biydaalt_1.model;
+package algorithm.mongolia_road_network.model;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

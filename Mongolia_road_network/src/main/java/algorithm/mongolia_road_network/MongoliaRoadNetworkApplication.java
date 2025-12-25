@@ -1,13 +1,13 @@
-package algorithm.biydaalt_1;
+package algorithm.mongolia_road_network;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BiyDaalt1Application {
+public class MongoliaRoadNetworkApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BiyDaalt1Application.class, args);
+        SpringApplication.run(MongoliaRoadNetworkApplication.class, args);
     }
 
 }

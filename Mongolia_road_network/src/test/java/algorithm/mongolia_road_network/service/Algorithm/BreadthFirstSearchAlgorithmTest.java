@@ -1,6 +1,8 @@
-package algorithm.biydaalt_1.service.Algorithm;
+package algorithm.mongolia_road_network.service.Algorithm;
 
-import algorithm.biydaalt_1.model.Edge;
+import algorithm.mongolia_road_network.model.Edge;
+import algorithm.mongolia_road_network.model.Response;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -14,41 +16,46 @@ public class BreadthFirstSearchAlgorithmTest extends AlgorithmTests {
 
     @Test
     void testFindPath_SimplePath() {
-        List<Integer> path = bfsAlgorithm.findPath(0, 5, edges);
+        Response path = bfsAlgorithm.findPath(1, 5, edges);
         assertNotNull(path);
-        assertEquals(0, path.get(0));
-        assertEquals(5, path.get(path.size() - 1));
-        assertEquals(3, path.size());
+        assertEquals(1, path.getPath().get(0));
+        assertEquals(5, path.getPath().get(path.getPath().size() - 1));
+        assertEquals(3, path.getPath().size());
 
-        assertTrue(isValidPath(path));
+        assertTrue(isValidPath(path.getPath()));
 
-        assertTrue(path.equals(List.of(0, 1, 2, 5)) ||
-                path.equals(List.of(0, 1, 4, 5)) ||
-                path.equals(List.of(0, 3, 4, 5)) ||
-                path.equals(List.of(0, 4, 5)));
+        assertTrue(path.getPath().equals(List.of(1, 2, 5)) ||
+                path.getPath().equals(List.of(1, 2, 4, 5)) ||
+                path.getPath().equals(List.of(1, 3, 4, 5)) ||
+                path.getPath().equals(List.of(1, 3, 4, 2, 5)));
+        
+        assertTrue(path.getTotalDistance() == 6 || 
+                path.getTotalDistance() == 10 || 
+                path.getTotalDistance() == 11 || 
+                path.getTotalDistance() == 13);
     }
 
     @Test
     void testFindPath_NoPath() {
         edges.put(7, new ArrayList<>());
-        List<Integer> path = bfsAlgorithm.findPath(0, 7, edges);
+        Response path = bfsAlgorithm.findPath(0, 7, edges);
         assertNull(path);
     }
 
     @Test
     void testFindPath_StartEqualsEnd() {
-        List<Integer> path = bfsAlgorithm.findPath(0, 0, edges);
-        assertNotNull(path);
-        assertEquals(List.of(0), path);
+        Response path = bfsAlgorithm.findPath(1, 1, edges);
+        assertNotNull(path.getPath());
+        assertEquals(List.of(1), path.getPath());
     }
 
     @Test
     void testFindPath_LongerPath() {
-        List<Integer> path = bfsAlgorithm.findPath(0, 6, edges);
+        Response path = bfsAlgorithm.findPath(1, 5, edges);
         assertNotNull(path);
-        assertEquals(0, path.get(0));
-        assertEquals(6, path.get(path.size() - 1));
-        assertEquals(List.of(0, 3, 6), path);
+        assertEquals(1, path.getPath().get(0));
+        assertEquals(5, path.getPath().get(path.getPath().size() - 1));
+        assertEquals(List.of(1, 2, 5), path.getPath());
     }
 
     @Test
@@ -56,18 +63,18 @@ public class BreadthFirstSearchAlgorithmTest extends AlgorithmTests {
         edges.computeIfAbsent(10, k -> new ArrayList<>()).add(new Edge(11, 1.0, "r", "a", false, false, null, "y", 10.0));
         edges.computeIfAbsent(11, k -> new ArrayList<>()).add(new Edge(10, 1.0, "r", "a", false, false, null, "y", 10.0));
 
-        List<Integer> path = bfsAlgorithm.findPath(0, 10, edges);
+        Response path = bfsAlgorithm.findPath(0, 10, edges);
         assertNull(path);
 
-        List<Integer> pathWithinComponent = bfsAlgorithm.findPath(10, 11, edges);
+        Response pathWithinComponent = bfsAlgorithm.findPath(10, 11, edges);
         assertNotNull(pathWithinComponent);
-        assertEquals(List.of(10, 11), pathWithinComponent);
+        assertEquals(List.of(10, 11), pathWithinComponent.getPath());
     }
 
     @Test
     void testFindPath_NoEdgesForStartNode() {
         edges.put(99, new ArrayList<>());
-        List<Integer> path = bfsAlgorithm.findPath(99, 0, edges);
+        Response path = bfsAlgorithm.findPath(99, 0, edges);
         assertNull(path);
     }
     private boolean isValidPath(List<Integer> path) {

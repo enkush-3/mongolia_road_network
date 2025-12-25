@@ -1,7 +1,8 @@
-package algorithm.biydaalt_1.controller;
+package algorithm.mongolia_road_network.controller;
 
-import algorithm.biydaalt_1.model.PathResponse;
-import algorithm.biydaalt_1.service.GraphService;
+import algorithm.mongolia_road_network.model.PathResponse;
+import algorithm.mongolia_road_network.model.Response;
+import algorithm.mongolia_road_network.service.GraphService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,22 +38,22 @@ public class PathController {
                     .body(Map.of("error", "Nearest node not found or map not initialized properly."));
         }
 
-        List<Integer> pathNodeIds;
+        Response pathNodeIds;
         try {
             pathNodeIds = graphService.findPath(startId, endId, algo);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
 
-        if (pathNodeIds == null || pathNodeIds.isEmpty()) {
+        if (pathNodeIds == null || pathNodeIds.getPath().isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Path not found"));
         }
 
-        List<PathResponse> pathCoords = pathNodeIds.stream()
+        List<PathResponse> pathCoords = pathNodeIds.getPath().stream()
                 .map(graphService::getNodeById)
                 .map(node -> new PathResponse(node.getLat(), node.getLon()))
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(Map.of("path", pathCoords));
+        return ResponseEntity.ok(Map.of("path", pathCoords, "total_distance", pathNodeIds.getTotalDistance()));
     }
 }

@@ -5,8 +5,8 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.5</version> <!-- Or any recent stable version -->
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>2.7.5</version>
+        <relativePath/>
     </parent>
     <groupId>com.example</groupId>
     <artifactId>BiyDaalt_1_1</artifactId>
@@ -14,16 +14,15 @@
     <name>ubpath</name>
     <description>UB Shortest Path API with Spring Boot</description>
     <properties>
-        <java.version>11</java.version>
-        <geotools.version>27.2</geotools.version> <!-- Or any recent stable version -->
+        <java.version>21</java.version>
+        <geotools.version>27.2</geotools.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-        <!-- GeoTools for reading Shapefiles -->
+        
         <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-shapefile</artifactId>

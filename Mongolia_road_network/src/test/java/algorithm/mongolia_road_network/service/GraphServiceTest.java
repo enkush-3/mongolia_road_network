@@ -1,11 +1,11 @@
-package algorithm.biydaalt_1.service;
+package algorithm.mongolia_road_network.service;
 
-import algorithm.biydaalt_1.model.Edge;
-import algorithm.biydaalt_1.model.Node;
-import algorithm.biydaalt_1.service.Algorithm.Algorithm;
-import algorithm.biydaalt_1.service.Algorithm.BreadthFirstSearchAlgorithm;
-import algorithm.biydaalt_1.service.Algorithm.DepthFirstSearchAlgorithm;
-import algorithm.biydaalt_1.service.Algorithm.DijkstraAlgorithm;
+import algorithm.mongolia_road_network.model.Edge;
+import algorithm.mongolia_road_network.model.Node;
+import algorithm.mongolia_road_network.service.Algorithm.AStarAlgorithm;
+import algorithm.mongolia_road_network.service.Algorithm.Algorithm;
+import algorithm.mongolia_road_network.service.Algorithm.BreadthFirstSearchAlgorithm;
+import algorithm.mongolia_road_network.service.Algorithm.DijkstraAlgorithm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +31,7 @@ public class GraphServiceTest {
 
         Map<String, Algorithm> algorithms = new HashMap<>();
         algorithms.put("dijkstra", new DijkstraAlgorithm());
-        algorithms.put("dfs", new DepthFirstSearchAlgorithm());
+        algorithms.put("dfs", new AStarAlgorithm(new HashMap<>()));
         algorithms.put("bfs", new BreadthFirstSearchAlgorithm());
         ReflectionTestUtils.setField(graphService, "algorithms", algorithms);
 
@@ -141,16 +141,16 @@ public class GraphServiceTest {
         int startId = graphService.getNodeId(40.7128, -74.0060);
         int endId = graphService.getNodeId(34.0522, -118.2437);
 
-        List<Integer> dijkstraPath = graphService.findPath(startId, endId, "dijkstra");
+        List<Integer> dijkstraPath = graphService.findPath(startId, endId, "dijkstra").getPath();
         assertNotNull(dijkstraPath);
         assertTrue(dijkstraPath.size() > 0);
         assertEquals(startId, dijkstraPath.get(0));
         assertEquals(endId, dijkstraPath.get(dijkstraPath.size() - 1));
 
-        List<Integer> bfsPath = graphService.findPath(startId, endId, "bfs");
+        List<Integer> bfsPath = graphService.findPath(startId, endId, "bfs").getPath();
         assertNotNull(bfsPath);
 
-        List<Integer> dfsPath = graphService.findPath(startId, endId, "dfs");
+        List<Integer> dfsPath = graphService.findPath(startId, endId, "dfs").getPath();
         assertNotNull(dfsPath);
 
         assertThrows(IllegalArgumentException.class, () -> {

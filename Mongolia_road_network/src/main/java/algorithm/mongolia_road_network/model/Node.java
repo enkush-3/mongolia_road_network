@@ -1,4 +1,4 @@
-package algorithm.biydaalt_1.model;
+package algorithm.mongolia_road_network.model;
 
 public class Node {
     private final int id;
