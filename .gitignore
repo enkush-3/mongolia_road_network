@@ -1,0 +1,59 @@
+# ==========================================
+# 1. СҮҮЛИЙН ҮЕИЙН СИСТЕМҮҮДИЙН ФАЙЛУУД (OS)
+# ==========================================
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+
+# ==========================================
+# 2. ХӨГЖҮҮЛЭЛТИЙН ОРЧИН (IDE / Editors)
+# ==========================================
+.idea/
+.vscode/
+*.iml
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ==========================================
+# 3. BACKEND (Spring Boot / Maven)
+# ==========================================
+# Build хийхэд гардаг үр дүнгийн хавтас
+backend/target/
+backend/build/
+
+# Maven-ий өөрийн ажиллуулах файлууд (хэрэв локал дээр хэрэггүй бол)
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
+
+# Багцалсан файлууд
+backend/*.jar
+backend/*.war
+
+# ==========================================
+# 4. FRONTEND (Vite / React / Node.js)
+# ==========================================
+# Суулгасан сангууд (Хамгийн хүнд хавтас)
+frontend/mongolia_road_network/node_modules/
+
+# Production build хийхэд үүсдэг хавтас
+frontend/mongolia_road_network/dist/
+frontend/mongolia_road_network/build/
+
+# Vite болон бусад кэшүүд
+frontend/mongolia_road_network/.vite/
+frontend/mongolia_road_network/.nuxt/
+frontend/mongolia_road_network/.next/
+
+# Локал орчны нууц түлхүүрүүд (Environment variables)
+frontend/mongolia_road_network/.env
+frontend/mongolia_road_network/.env.local
+frontend/mongolia_road_network/.env.development.local
+frontend/mongolia_road_network/.env.test.local
+frontend/mongolia_road_network/.env.production.local
+
+# TypeScript build кэш
+frontend/mongolia_road_network/*.tsbuildinfo

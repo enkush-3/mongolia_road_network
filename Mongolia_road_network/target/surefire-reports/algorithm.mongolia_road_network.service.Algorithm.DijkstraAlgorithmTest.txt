@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: algorithm.mongolia_road_network.service.Algorithm.DijkstraAlgorithmTest
--------------------------------------------------------------------------------
-Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in algorithm.mongolia_road_network.service.Algorithm.DijkstraAlgorithmTest

@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: algorithm.mongolia_road_network.service.GraphServiceTest
--------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.188 s - in algorithm.mongolia_road_network.service.GraphServiceTest
