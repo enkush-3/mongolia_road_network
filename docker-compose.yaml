@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+
+  backend:
+    build: ./backend
+    container_name: road_backend
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend/shapefiles:/app/shapefiles:ro
+    environment:
+      - SHAPEFILE_PATH=/app/shapefiles/gis_osm_roads_free_1.shp
+
+
+  frontend:
+    build: ./frontend
+    container_name: road_frontend
+    restart: always
+    ports:
+      - "3000:5173"
+    depends_on:
+      - backend
+
