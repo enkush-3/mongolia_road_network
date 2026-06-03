@@ -69,7 +69,7 @@ export async function FindPath(requestData: PathRequest): Promise<FindPathRespon
                     }
                 }
                 return null;
-            }).filter((coord): coord is [number, number] => coord !== null);
+            }).filter((coord: [number, number] | null): coord is [number, number] => coord !== null);
         }
 
 
