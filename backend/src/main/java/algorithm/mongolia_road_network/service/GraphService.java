@@ -19,14 +19,19 @@ import org.locationtech.jts.geom.MultiLineString;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 @Service
 public class GraphService {
+
+    @Value("${shapefile.path:/app/shapefiles/gis_osm_roads_free_1.shp}")
+    private String shapefilePath;
 
     private final Map<Integer, List<Edge>> edges = new HashMap<>();
     private final Map<Integer, Node> idToNode = new HashMap<>();
@@ -41,12 +46,21 @@ public class GraphService {
 
     @PostConstruct
     public void init() throws Exception {
-
+        // Алгоритмуудыг бүртгэх
         algorithms.put("dijkstra", new DijkstraAlgorithm());
         algorithms.put("astar", new AStarAlgorithm(idToNode));
         algorithms.put("bfs", new BreadthFirstSearchAlgorithm());
 
-        File shapefile = new File(getClass().getClassLoader().getResource("data/gis_osm_roads_free_1.shp").getFile());
+        // Shapefile замыг шалгах
+        if (shapefilePath == null || shapefilePath.isEmpty()) {
+            throw new IllegalStateException("Shapefile path is not configured. Set 'shapefile.path' property.");
+        }
+        File shapefile = new File(shapefilePath);
+        if (!shapefile.exists()) {
+            throw new FileNotFoundException("Shapefile not found at: " + shapefile.getAbsolutePath());
+        }
+
+        // Shapefile унших
         ShapefileDataStore dataStore = new ShapefileDataStore(shapefile.toURI().toURL());
         SimpleFeatureSource featureSource = dataStore.getFeatureSource();
 
@@ -76,7 +90,6 @@ public class GraphService {
                 if (geom instanceof LineString) {
                     processLineString((LineString) geom, isOneWay,
                             maxspeedAttr, accessAttr, fclassAttr, surfaceAttr, bridgeAttr, tunnelAttr, turn_restrAttr);
-
                 } else if (geom instanceof MultiLineString) {
                     MultiLineString mls = (MultiLineString) geom;
                     for (int i = 0; i < mls.getNumGeometries(); i++) {
@@ -182,41 +195,6 @@ public class GraphService {
         }
         return nearestNodeId;
     }
-
-//    public int findNearestNode(double lat, double lon) {
-//        double searchRadius = 0.001;
-//
-//        org.locationtech.jts.geom.Envelope searchArea = new org.locationtech.jts.geom.Envelope(
-//                lon - searchRadius, lon + searchRadius,
-//                lat - searchRadius, lat + searchRadius
-//        );
-//        List<Node> candidates = (List<Node>) spatialIndex.query(searchArea);
-//        if (candidates.isEmpty()) {
-//            searchRadius = 0.1;
-//            searchArea = new org.locationtech.jts.geom.Envelope(
-//                    lon - searchRadius, lon + searchRadius,
-//                    lat - searchRadius, lat + searchRadius
-//            );
-//            candidates = (List<Node>) spatialIndex.query(searchArea);
-//        }
-//
-//        if (candidates.isEmpty()) {
-//            candidates = new ArrayList<>(idToNode.values());
-//        }
-//
-//        double minDistance = Double.MAX_VALUE;
-//        int nearestNodeId = -1;
-//
-//        for (Node node : candidates) {
-//            double distance = haversine(lat, lon, node.getLat(), node.getLon());
-//            if (distance < minDistance) {
-//                minDistance = distance;
-//                nearestNodeId = node.getId();
-//            }
-//        }
-//
-//        return nearestNodeId;
-//    }
 
     public Response findPath(int startId, int endId, String algorithmName) {
         Algorithm algorithm = algorithms.get(algorithmName.toLowerCase());
